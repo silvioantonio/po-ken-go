@@ -27,10 +27,13 @@ public class Main2Activity extends AppCompatActivity {
         imageView = findViewById(R.id.imagem);
         textView = findViewById(R.id.jogador);
 
+        textView.setText("Player 1");
+
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 imageView.setImageResource(images[new Random().nextInt(images.length)]);
+                textView.setText("Player 2");
             }
         });
 
