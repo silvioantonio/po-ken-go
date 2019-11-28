@@ -51,7 +51,7 @@
         android:layout_gravity="center|left"
         android:layout_margin="20dp"
         android:id="@+id/imagem2"
-        android:src="@drawable/fogo"/>
+        android:src="@drawable/agua"/>
     </LinearLayout>
 
 </LinearLayout>

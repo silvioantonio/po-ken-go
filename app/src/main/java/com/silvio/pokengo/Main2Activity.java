@@ -24,7 +24,7 @@ public class Main2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         imageButton = findViewById(R.id.button);
-        imageView = findViewById(R.id.imagem);
+        imageView = findViewById(R.id.imagem1);
         textView = findViewById(R.id.jogador);
 
         textView.setText("Player 1");
