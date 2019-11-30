@@ -20,11 +20,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        int maxVolume = 100;
+        int currentVolume = 30;
+        float volume = (float) (Math.log(maxVolume - currentVolume) / Math.log(maxVolume));
+
         novo_jogo = findViewById(R.id.novo_jogo);
         resetar_jogo = findViewById(R.id.resetar_jogo);
 
         mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.opening);
 
+        mediaPlayer.setVolume(1-volume, 1-volume);
         mediaPlayer.start();
 
         /*if(getIntent().getExtras().getString("score") != null) {
