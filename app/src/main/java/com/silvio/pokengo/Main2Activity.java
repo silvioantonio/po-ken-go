@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -19,6 +20,7 @@ public class Main2Activity extends AppCompatActivity {
     private ImageButton imageButton;
     private ImageSwitcher imageSwitcher;
     private TextView textView;
+    private MediaPlayer mediaPlayer;
 
     private int[] images = {
             R.drawable.fogo,
@@ -45,6 +47,14 @@ public class Main2Activity extends AppCompatActivity {
 
         textView.setText("Player 1: sortear pokemon");
 
+        mediaPlayer = MediaPlayer.create(Main2Activity.this, R.raw.battle);
+        int maxVolume = 100;
+        int volumeAtual = 50;
+        final float volume =(float) (Math.log(maxVolume - volumeAtual) / Math.log(maxVolume));
+
+        mediaPlayer.start();
+        mediaPlayer.setVolume( 1 - volume,  1 - volume);
+
         imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
             public View makeView() {
@@ -61,7 +71,7 @@ public class Main2Activity extends AppCompatActivity {
                 //imageView.setImageResource(images[new Random().nextInt(images.length)]);
                 if(cont < 2) {
                     Random r = new Random();
-                    position = r.nextInt((2 - 0) + 1) + 0;
+                    position = r.nextInt(3);
                     if(cont < 1)
                         pokemon_1 = position + 1;
                     else
@@ -71,6 +81,14 @@ public class Main2Activity extends AppCompatActivity {
                     cont++;
                 } else if (cont == 2) {
                     textView.setText("Figth");
+
+                    if(mediaPlayer.isPlaying()) {
+                        mediaPlayer.stop();
+                        mediaPlayer = MediaPlayer.create(Main2Activity.this, R.raw.victory);
+                        mediaPlayer.start();
+                        mediaPlayer.setVolume( 1 - volume,  1 - volume);
+                    }
+
                     switch (pokemon_1){
                         case 1:
                             if (pokemon_2 == 1)
@@ -101,6 +119,9 @@ public class Main2Activity extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(Main2Activity.this, MainActivity.class);
                     //intent.putExtra("score", score);
+                    if(mediaPlayer.isPlaying()) {
+                        mediaPlayer.stop();
+                    }
                     startActivity(intent);
                 }
             }
