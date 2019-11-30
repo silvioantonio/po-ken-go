@@ -20,9 +20,19 @@ public class Main2Activity extends AppCompatActivity {
     private ImageSwitcher imageSwitcher;
     private TextView textView;
 
-    private int[] images = {R.drawable.fogo, R.drawable.planta, R.drawable.agua, R.drawable.placeholder};
-    int position = -1;
-    int cont = 0;
+    private int[] images = {
+            R.drawable.fogo,
+            R.drawable.planta,
+            R.drawable.agua,
+            R.drawable.escolha,
+            R.drawable.luta_1x1,
+            R.drawable.luta_1x2,
+            R.drawable.luta_1x3,
+            R.drawable.luta_2x2,
+            R.drawable.luta_2x3,
+            R.drawable.luta_3x3
+    };
+    int pokemon_1, pokemon_2, cont = 0, position = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +43,14 @@ public class Main2Activity extends AppCompatActivity {
         imageSwitcher = findViewById(R.id.image_switcher);
         textView = findViewById(R.id.jogador);
 
-        textView.setText("Player 1");
+        textView.setText("Player 1: sortear pokemon");
 
         imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
             public View makeView() {
                 ImageView imageView = new ImageView(getApplicationContext());
                 imageView.setLayoutParams(new ImageSwitcher.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
+                imageSwitcher.setBackgroundResource(images[3]);
                 return imageView;
             }
         });
@@ -49,15 +60,43 @@ public class Main2Activity extends AppCompatActivity {
             public void onClick(View v) {
                 //imageView.setImageResource(images[new Random().nextInt(images.length)]);
                 if(cont < 2) {
-                    if(position<images.length-1){
-                        position++;
-                        imageSwitcher.setBackgroundResource(images[position]);
-                    }
-                    textView.setText("Player 2");
+                    Random r = new Random();
+                    position = r.nextInt((2 - 0) + 1) + 0;
+                    if(cont < 1)
+                        pokemon_1 = position + 1;
+                    else
+                        pokemon_2 = position + 1;
+                    imageSwitcher.setBackgroundResource(images[position]);
+                    textView.setText("Player 2: sortear pokemon");
                     cont++;
                 } else if (cont == 2) {
-                    imageSwitcher.setBackgroundResource(images[3]);
                     textView.setText("Figth");
+                    switch (pokemon_1){
+                        case 1:
+                            if (pokemon_2 == 1)
+                                imageSwitcher.setBackgroundResource(images[4]);
+                            else if (pokemon_2 == 2)
+                                imageSwitcher.setBackgroundResource(images[5]);
+                            else
+                                imageSwitcher.setBackgroundResource(images[6]);
+                            break;
+                        case 2:
+                            if (pokemon_2 == 1)
+                                imageSwitcher.setBackgroundResource(images[5]);
+                            else if (pokemon_2 == 2)
+                                imageSwitcher.setBackgroundResource(images[7]);
+                            else
+                                imageSwitcher.setBackgroundResource(images[8]);
+                            break;
+                        case 3:
+                            if (pokemon_2 == 1)
+                                imageSwitcher.setBackgroundResource(images[6]);
+                            else if (pokemon_2 == 2)
+                                imageSwitcher.setBackgroundResource(images[8]);
+                            else
+                                imageSwitcher.setBackgroundResource(images[9]);
+                            break;
+                    }
                     cont++;
                 } else {
                     Intent intent = new Intent(Main2Activity.this, MainActivity.class);
