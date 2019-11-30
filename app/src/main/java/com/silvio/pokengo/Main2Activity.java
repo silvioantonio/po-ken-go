@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,7 @@ public class Main2Activity extends AppCompatActivity {
     private ImageSwitcher imageSwitcher;
     private TextView textView;
     private MediaPlayer mediaPlayer;
+    private SharedPreferences sharedPreferences;
 
     private int[] images = {
             R.drawable.fogo,
@@ -44,6 +46,9 @@ public class Main2Activity extends AppCompatActivity {
         imageButton = findViewById(R.id.button);
         imageSwitcher = findViewById(R.id.image_switcher);
         textView = findViewById(R.id.jogador);
+
+        sharedPreferences = getSharedPreferences("score", MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
 
         textView.setText("Player 1: sortear pokemon");
 
@@ -91,27 +96,35 @@ public class Main2Activity extends AppCompatActivity {
 
                     switch (pokemon_1){
                         case 1:
-                            if (pokemon_2 == 1)
+                            if (pokemon_2 == 1)//fogo
                                 imageSwitcher.setBackgroundResource(images[4]);
-                            else if (pokemon_2 == 2)
+                            else if (pokemon_2 == 2) {//planta
                                 imageSwitcher.setBackgroundResource(images[5]);
-                            else
+                                editor.putString("player1", "1");
+                            }else {//agua
                                 imageSwitcher.setBackgroundResource(images[6]);
+                                editor.putString("player2", "1");
+                            }
                             break;
                         case 2:
-                            if (pokemon_2 == 1)
+                            if (pokemon_2 == 1) {
                                 imageSwitcher.setBackgroundResource(images[5]);
-                            else if (pokemon_2 == 2)
+                                editor.putString("player2", "1");
+                            }else if (pokemon_2 == 2)
                                 imageSwitcher.setBackgroundResource(images[7]);
-                            else
+                            else {
                                 imageSwitcher.setBackgroundResource(images[8]);
+                                editor.putString("player1", "1");
+                            }
                             break;
                         case 3:
-                            if (pokemon_2 == 1)
+                            if (pokemon_2 == 1) {
                                 imageSwitcher.setBackgroundResource(images[6]);
-                            else if (pokemon_2 == 2)
+                                editor.putString("player1", "1");
+                            }else if (pokemon_2 == 2) {
                                 imageSwitcher.setBackgroundResource(images[8]);
-                            else
+                                editor.putString("player2", "1");
+                            }else
                                 imageSwitcher.setBackgroundResource(images[9]);
                             break;
                     }
@@ -122,6 +135,9 @@ public class Main2Activity extends AppCompatActivity {
                     if(mediaPlayer.isPlaying()) {
                         mediaPlayer.stop();
                     }
+
+                    editor.commit();
+
                     startActivity(intent);
                 }
                 if(cont == 2)
