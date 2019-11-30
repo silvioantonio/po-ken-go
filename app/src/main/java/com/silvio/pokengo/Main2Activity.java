@@ -80,7 +80,7 @@ public class Main2Activity extends AppCompatActivity {
                     textView.setText("Player 2: sortear pokemon");
                     cont++;
                 } else if (cont == 2) {
-                    textView.setText("Figth");
+                    textView.setText("Fight");
 
                     if(mediaPlayer.isPlaying()) {
                         mediaPlayer.stop();
@@ -124,6 +124,8 @@ public class Main2Activity extends AppCompatActivity {
                     }
                     startActivity(intent);
                 }
+                if(cont == 2)
+                    imageButton.setBackgroundResource(R.drawable.go);
             }
         });
 
