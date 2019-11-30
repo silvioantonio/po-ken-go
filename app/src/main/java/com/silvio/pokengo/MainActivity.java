@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     private SharedPreferences sharedPreferences;
     private TextView player1, player2;
-    private String score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +29,18 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("score", MODE_PRIVATE);
 
         if(sharedPreferences.contains("player1")){
-            player1.setText(sharedPreferences.getString("player1", player1.getText().toString()));
+            player1.setText(
+                    ""+
+                Integer.parseInt( player1.getText().toString())+
+                Integer.parseInt(sharedPreferences.getString("player1",null))
+            );
         }
         if(sharedPreferences.contains("player2")){
-            player2.setText(sharedPreferences.getString("player2", null));
+            player2.setText(
+                    ""+
+                Integer.parseInt( player2.getText().toString())+
+                Integer.parseInt(sharedPreferences.getString("player2",null))
+            );
         }
 
         int maxVolume = 100;
@@ -61,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
                     mediaPlayer.stop();
                 }
                 intent = new Intent(MainActivity.this, Main2Activity.class);
-                intent.putExtra("score", score);
                 startActivity(intent);
             }
         });
