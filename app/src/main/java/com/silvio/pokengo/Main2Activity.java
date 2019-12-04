@@ -3,6 +3,7 @@ package com.silvio.pokengo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
@@ -12,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import java.util.Random;
@@ -47,9 +49,6 @@ public class Main2Activity extends AppCompatActivity {
         imageSwitcher = findViewById(R.id.image_switcher);
         textView = findViewById(R.id.jogador);
 
-        sharedPreferences = getSharedPreferences("score", MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-
         textView.setText("Player 1: sortear pokemon");
 
         mediaPlayer = MediaPlayer.create(Main2Activity.this, R.raw.battle);
@@ -73,7 +72,6 @@ public class Main2Activity extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //imageView.setImageResource(images[new Random().nextInt(images.length)]);
                 if(cont < 2) {
                     Random r = new Random();
                     position = r.nextInt(3);
@@ -94,56 +92,86 @@ public class Main2Activity extends AppCompatActivity {
                         mediaPlayer.setVolume( 1 - volume,  1 - volume);
                     }
 
-                    switch (pokemon_1){
+
+                    switch (pokemon_1) {
                         case 1:
-                            if (pokemon_2 == 1)//fogo
+                            if (pokemon_2 == 1) {//fogo
                                 imageSwitcher.setBackgroundResource(images[4]);
-                            else if (pokemon_2 == 2) {//planta
+                                int player1 = pegaPontuacao("player1") + 1;
+                                int player2 = pegaPontuacao("player2") + 1;
+                                salvaNosharedPreference("player1", player1);
+                                salvaNosharedPreference("player2", player2);
+                            } else if (pokemon_2 == 2) {//planta
                                 imageSwitcher.setBackgroundResource(images[5]);
-                                editor.putInt("player1", 1);
-                            }else {//agua
+                                int player2 = pegaPontuacao("player2") + 1;
+                                salvaNosharedPreference("player2", player2);
+                            } else {//agua
                                 imageSwitcher.setBackgroundResource(images[6]);
-                                editor.putInt("player2", 1);
+                                int player1 = pegaPontuacao("player1") + 1;
+                                salvaNosharedPreference("player1", player1);
                             }
                             break;
                         case 2:
                             if (pokemon_2 == 1) {
                                 imageSwitcher.setBackgroundResource(images[5]);
-                                editor.putInt("player2", 1);
-                            }else if (pokemon_2 == 2)
+                                int player2 = pegaPontuacao("player2") + 1;
+                                salvaNosharedPreference("player2", player2);
+                            } else if (pokemon_2 == 2) {
                                 imageSwitcher.setBackgroundResource(images[7]);
-                            else {
+                                int player1 = pegaPontuacao("player1") + 1;
+                                int player2 = pegaPontuacao("player2") + 1;
+                                salvaNosharedPreference("player1", player1);
+                                salvaNosharedPreference("player2", player2);
+                            } else {
                                 imageSwitcher.setBackgroundResource(images[8]);
-                                editor.putInt("player1", 1);
+                                int player1 = pegaPontuacao("player1") + 1;
+                                salvaNosharedPreference("player1", player1);
                             }
                             break;
                         case 3:
                             if (pokemon_2 == 1) {
                                 imageSwitcher.setBackgroundResource(images[6]);
-                                editor.putInt("player1", 1);
-                            }else if (pokemon_2 == 2) {
+                                int player1 = pegaPontuacao("player1") + 1;
+                                salvaNosharedPreference("player1", player1);
+                            } else if (pokemon_2 == 2) {
                                 imageSwitcher.setBackgroundResource(images[8]);
-                                editor.putInt("player2", 1);
-                            }else
+                                int player2 = pegaPontuacao("player2") + 1;
+                                salvaNosharedPreference("player2", player2);
+                            } else {
                                 imageSwitcher.setBackgroundResource(images[9]);
+                                int player1 = pegaPontuacao("player1") + 1;
+                                int player2 = pegaPontuacao("player2") + 1;
+                                salvaNosharedPreference("player1", player1);
+                                salvaNosharedPreference("player2", player2);
+                            }
                             break;
                     }
                     cont++;
                 } else {
                     Intent intent = new Intent(Main2Activity.this, MainActivity.class);
-                    //intent.putExtra("score", score);
                     if(mediaPlayer.isPlaying()) {
                         mediaPlayer.stop();
                     }
 
-                    editor.commit();
-
                     startActivity(intent);
                 }
-                if(cont == 2)
-                    imageButton.setBackgroundResource(R.drawable.go);
+                if(cont == 2) imageButton.setBackgroundResource(R.drawable.go);
             }
         });
 
+    }
+
+    private void salvaNosharedPreference(String player, int pontuacao) {
+        //Toast.makeText(this, "salva" + player + ": " + pontuacao, Toast.LENGTH_SHORT).show();
+        sharedPreferences = getSharedPreferences("score", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(player, pontuacao);
+        editor.commit();
+    }
+
+    private int pegaPontuacao(String player) {
+        //Toast.makeText(this, "Pega pontucao do " + player, Toast.LENGTH_SHORT).show();
+        sharedPreferences = getSharedPreferences("score", Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(player,0);
     }
 }
