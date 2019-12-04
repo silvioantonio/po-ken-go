@@ -100,30 +100,30 @@ public class Main2Activity extends AppCompatActivity {
                                 imageSwitcher.setBackgroundResource(images[4]);
                             else if (pokemon_2 == 2) {//planta
                                 imageSwitcher.setBackgroundResource(images[5]);
-                                editor.putString("player1", "1");
+                                editor.putInt("player1", 1);
                             }else {//agua
                                 imageSwitcher.setBackgroundResource(images[6]);
-                                editor.putString("player2", "1");
+                                editor.putInt("player2", 1);
                             }
                             break;
                         case 2:
                             if (pokemon_2 == 1) {
                                 imageSwitcher.setBackgroundResource(images[5]);
-                                editor.putString("player2", "1");
+                                editor.putInt("player2", 1);
                             }else if (pokemon_2 == 2)
                                 imageSwitcher.setBackgroundResource(images[7]);
                             else {
                                 imageSwitcher.setBackgroundResource(images[8]);
-                                editor.putString("player1", "1");
+                                editor.putInt("player1", 1);
                             }
                             break;
                         case 3:
                             if (pokemon_2 == 1) {
                                 imageSwitcher.setBackgroundResource(images[6]);
-                                editor.putString("player1", "1");
+                                editor.putInt("player1", 1);
                             }else if (pokemon_2 == 2) {
                                 imageSwitcher.setBackgroundResource(images[8]);
-                                editor.putString("player2", "1");
+                                editor.putInt("player2", 1);
                             }else
                                 imageSwitcher.setBackgroundResource(images[9]);
                             break;

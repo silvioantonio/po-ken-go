@@ -29,18 +29,21 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("score", MODE_PRIVATE);
 
         if(sharedPreferences.contains("player1")){
-            player1.setText(
-                    ""+
-                Integer.parseInt( player1.getText().toString())+
-                Integer.parseInt(sharedPreferences.getString("player1",null))
-            );
+            int soma = 0;
+            if (player1.getText().toString().length()>0)
+                soma = Integer.parseInt( player1.getText().toString());
+            soma += sharedPreferences.getInt("player1", soma);
+            player1.setText(String.valueOf(soma));
         }
         if(sharedPreferences.contains("player2")){
-            player2.setText(
-                    ""+
-                Integer.parseInt( player2.getText().toString())+
-                Integer.parseInt(sharedPreferences.getString("player2",null))
-            );
+            int soma = 0;
+            if(player2.getText().toString().length()>0){
+                soma = Integer.parseInt(player2.getText().toString());
+                System.out.println("SOMA : "+soma);
+            }
+            soma += sharedPreferences.getInt("player2", soma);
+            System.out.println("SOMA : : "+ soma);
+            player2.setText(String.valueOf(soma));
         }
 
         int maxVolume = 100;
