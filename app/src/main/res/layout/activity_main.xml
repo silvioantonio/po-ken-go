@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/tela_inicial"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -17,7 +18,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="150dp"
+            android:layout_marginStart="180dp"
             android:id="@+id/novo_jogo"
             android:text="New Game"/>
 
