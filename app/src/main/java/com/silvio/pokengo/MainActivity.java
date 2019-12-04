@@ -2,6 +2,7 @@ package com.silvio.pokengo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
@@ -22,29 +23,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        String score = "";
 
         player1 = findViewById(R.id.player1);
         player2 = findViewById(R.id.player2);
 
-        sharedPreferences = getSharedPreferences("score", MODE_PRIVATE);
-
-        if(sharedPreferences.contains("player1")){
-            int soma = 0;
-            if (player1.getText().toString().length()>0)
-                soma = Integer.parseInt( player1.getText().toString());
-            soma += sharedPreferences.getInt("player1", soma);
-            player1.setText(String.valueOf(soma));
-        }
-        if(sharedPreferences.contains("player2")){
-            int soma = 0;
-            if(player2.getText().toString().length()>0){
-                soma = Integer.parseInt(player2.getText().toString());
-                System.out.println("SOMA : "+soma);
-            }
-            soma += sharedPreferences.getInt("player2", soma);
-            System.out.println("SOMA : : "+ soma);
-            player2.setText(String.valueOf(soma));
-        }
+        sharedPreferences = getSharedPreferences("score", Context.MODE_PRIVATE);
+        player1.setText("Player 1 => " + sharedPreferences.getInt("player1",0) + " Points");
+        player2.setText("Player 2 => " + sharedPreferences.getInt("player2",0) + " Points");
 
         int maxVolume = 100;
         int currentVolume = 30;
@@ -57,12 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
         mediaPlayer.setVolume(1-volume, 1-volume);
         mediaPlayer.start();
-
-        /*if(getIntent().getExtras().getString("score") != null) {
-            score = getIntent().getExtras().getString("score");
-        } else {
-            score = "";
-        }*/
 
         novo_jogo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
                 editor.commit();
-                player1.setText("");
-                player2.setText("");
+                player1.setText("Player 1 => 0 Points");
+                player2.setText("Player 2 => 0 Points");
             }
         });
 
